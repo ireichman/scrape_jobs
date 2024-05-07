@@ -4,9 +4,9 @@ Scrape websites for jobs postings containing keywords.
 
 # Set up selenium or BeautifulSoup.
 
-# Read list of websites to scrape.
+# Read list of websites to scrape. User will populate a text file with a list of sites separated by new line.
 
-# Read list of keywords to look for.
+# Read list of keywords to look for. User will populate a text file with a list of sites separated by new line.
 
 # Scrape a website for careers/ jobs/ corporate/ etc.
 
