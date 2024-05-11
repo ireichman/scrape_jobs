@@ -30,18 +30,24 @@ def keywords_search(html_string: str, keywords: list):
 
 # Scrape a website for careers/ jobs/ corporate/ etc.
 jobs_element = soup.find(id="ResultsContainer")
-jobs_elements = jobs_element.find_all("div", class_="card-content")
+# jobs_elements = jobs_element.find_all("div", class_="card-content")
 
 # Find jobs with specific keywords.
 relevant_jobs = jobs_element.find_all("h2",
-                                      string=keywords_search(keyword=["python", "executive"]))
+                                      string=lambda text: "python" in text.lower()) # keywords_search(html_string=text, keyword=["python", "executive"]))
+
+relevant_jobs_full_card = [h2_element.parent.parent.parent for h2_element in relevant_jobs]
 
 # Iterate through found listings
-for job in jobs_elements:
+for job in relevant_jobs_full_card:
     job_title = job.find("h2", class_="title")
     job_company = job.find("h3", class_="company")
     job_location = job.find("p", class_="location")
-    print(f"Title: {job_title.text} \nCompany: {job_company.text} \nLocation: {job_location.text.strip()}\n")
+    job_link = job.
+    print(f"Title: {job_title.text} "
+          f"\nCompany: {job_company.text} "
+          f"\nLocation: {job_location.text.strip()} "
+          f"\nJob Posting: {}")
 
 # Look for next type buttons.
 
