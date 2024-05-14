@@ -8,8 +8,9 @@ from loguru import logger
 
 class HTML:
 
-    def __init__(self, html_raw):
+    def __init__(self, html_raw, keywords: list):
         self.html = bs(markup=html_raw.content, features="html.parser")
+        self.keywords: list = keywords
 
     def search_elements(self, element_type: str, string_text: list, element_attribute: str = None):
         """

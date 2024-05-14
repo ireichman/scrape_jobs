@@ -4,11 +4,7 @@ Scrape websites for jobs postings containing keywords.
 from bs4 import BeautifulSoup as bs
 import requests
 from loguru import logger
-
-# Set up selenium or BeautifulSoup.
-url = "https://realpython.github.io/fake-jobs/"
-page = requests.get(url=url)
-soup = bs(markup=page.content, features="html.parser")
+from html_handling import HTML
 
 
 def list_from_file(file: str):
@@ -59,9 +55,26 @@ def keywords_search(html_string: str, keywords: list):
         else:
             continue
     return False
+
+
+if __name__ == "__main__":
+    pass
+
+
+
+
 # Read list of websites to scrape. User will populate a text file with a list of sites separated by new line.
+websites = list_from_file(file="keywords")
 
 # Read list of keywords to look for. User will populate a text file with a list of sites separated by new line.
+keywords = list_from_file(file="keywords")
+
+# Pull website.
+url = "https://realpython.github.io/fake-jobs/"
+page = requests.get(url=url)
+
+# Cook soup
+soup = HTML(html_raw=page, keywords=keywords) #bs(markup=page.content, features="html.parser")
 
 # Scrape a website for careers/ jobs/ corporate/ etc.
 jobs_element = soup.find(id="ResultsContainer")
