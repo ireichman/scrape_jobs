@@ -1,2 +1,3 @@
-canonical.com
-mozilla.org
+https://www.canonical.com
+https://www.mozilla.org
+https://realpython.github.io/fake-jobs/
