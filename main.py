@@ -53,7 +53,7 @@ for website in websites[:1]:
     page = requests.get(url="https://www.mozilla.org")
     soup = HTML(html_raw=page, keywords=keywords, website=website) #bs(markup=page.content, features="html.parser")
     job_sites_objects.append(soup)
-print(job_sites_objects[0].search_elements(element_type="a", ))
+print(job_sites_objects[0].search_elements(element_type="a", text_content="Careers"))
 
 # Scrape a website for careers/ jobs/ corporate/ etc.
 # for soup in job_sites_objects:
