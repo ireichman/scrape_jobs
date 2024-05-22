@@ -15,9 +15,10 @@ class HTML:
         self.keywords: list = keywords
         self.element: object = None
         self.elements: list = []
+        self.elements_with_keywords: list = []
         logger.info(f"Created HTML object for {website} with keywords: {keywords}")
 
-    def search_elements(self, element_type: str, text_content: str):
+    def search_for_elements(self, element_type: str, text_content: str):
         """
         Find HTML elements whose string match any of the strings in string_text. Optionally, Specify a different HTML
         attribute that string_text should match.
@@ -56,28 +57,26 @@ class HTML:
 
     def extract_from_element(self, what_to_extract: str):
         """
-
+        Finds data in BS object.
         :param element_object:
         :return:
         """
         logger.info(f"Extracting from element: {what_to_extract}")
         try:
-            extracted_data = self.element["href"]
+            extracted_data = self.element[what_to_extract]
             logger.info(f"Extracted data: {extracted_data}")
             return extracted_data
         except Exception as error:
             logger.error(error)
-        # logger.info(f"THE HREF= {element['href']}")
-
-        pass
 
     def keywords_search(self, keywords: list):
         """
-
-        :param keywords:
-        :return:
+        Take a list of BS objects and search for keywords in them. Add those elements to self.element_with_keywords
+        :param keywords: list of keywords passed by the user.
+        :return: self.element_with_keywords
         """
-        for keyword in keywords:
-            if keyword in "":
-                return ""
-        pass
+        for element in self.elements:
+            for keyword in keywords:
+                if keyword.lower() in element.text.lower():
+                    self.elements_with_keywords.append(element)
+        return self.elements_with_keywords

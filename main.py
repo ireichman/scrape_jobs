@@ -57,7 +57,7 @@ for website in websites[1:]:
     # print("a:\n", job_sites_objects[0].extract_from_element(what_to_extract="href"))
 
 for job_site in job_sites_objects:
-    job_site.search_elements(element_type='a', text_content="")
+    job_site.search_for_elements(element_type='a', text_content="")
     jobs_list = job_site.keywords_search(keywords=keywords)
 
 
