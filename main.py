@@ -49,11 +49,21 @@ keywords = list_from_file(file="keywords")
 
 # Cook soup
 job_sites_objects = []
-for website in websites[:1]:
-    page = requests.get(url="https://www.mozilla.org")
+for website in websites[1:]:
+    page = requests.get(url=website)
     soup = HTML(html_raw=page, keywords=keywords, website=website) #bs(markup=page.content, features="html.parser")
     job_sites_objects.append(soup)
-print(job_sites_objects[0].search_elements(element_type="a", text_content="Careers"))
+    # element = job_sites_objects[0].search_elements(element_type="a", text_content="Careers")
+    # print("a:\n", job_sites_objects[0].extract_from_element(what_to_extract="href"))
+
+for job_site in job_sites_objects:
+    job_site.search_elements(element_type='a', text_content="")
+    jobs_list = job_site.keywords_search(keywords=keywords)
+
+
+
+
+
 
 # Scrape a website for careers/ jobs/ corporate/ etc.
 # for soup in job_sites_objects:
