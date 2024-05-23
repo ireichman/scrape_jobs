@@ -51,6 +51,7 @@ class HTML:
             all_elements = self.html_body.find_all(name=element_type, href=True)
             logger.info(f"Found elements: {all_elements}")
             self.elements = all_elements
+            logger.debug(f"Self.elements = {self.elements}")
             return all_elements
         except Exception as error:
             logger.error(f"Searching for element(s) error: {error}")
@@ -75,8 +76,14 @@ class HTML:
         :param keywords: list of keywords passed by the user.
         :return: self.element_with_keywords
         """
+
         for element in self.elements:
             for keyword in keywords:
-                if keyword.lower() in element.text.lower():
-                    self.elements_with_keywords.append(element)
+                logger.info(f"Searching for '{keyword}' in {str(element)}")
+                if re.search(pattern=keyword, string=str(element).lower()):
+                    logger.info(f"FOUND {keyword} in {str(element).lower()}")
+                    if element not in self.elements_with_keywords:
+                        self.elements_with_keywords.append(element)
+                        logger.info(f"Added {element}\n to self.elements_with_keyword based on keyword: {keyword}")
         return self.elements_with_keywords
+

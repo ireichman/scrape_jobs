@@ -49,7 +49,7 @@ keywords = list_from_file(file="keywords")
 
 # Cook soup
 job_sites_objects = []
-for website in websites[1:]:
+for website in websites[2:]:
     page = requests.get(url=website)
     soup = HTML(html_raw=page, keywords=keywords, website=website) #bs(markup=page.content, features="html.parser")
     job_sites_objects.append(soup)
@@ -59,6 +59,7 @@ for website in websites[1:]:
 for job_site in job_sites_objects:
     job_site.search_for_elements(element_type='a', text_content="")
     jobs_list = job_site.keywords_search(keywords=keywords)
+print(jobs_list)
 
 
 
