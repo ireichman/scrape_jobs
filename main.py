@@ -59,7 +59,7 @@ for website in websites[2:]:
 for job_site in job_sites_objects:
     job_site.search_for_elements(element_type='a', text_content="")
     jobs_list = job_site.keywords_search(keywords=keywords)
-print(jobs_list)
+print("Jobs Matching keywords:\n", jobs_list)
 
 
 

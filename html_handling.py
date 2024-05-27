@@ -78,12 +78,14 @@ class HTML:
         """
 
         for element in self.elements:
+            element_string = str(element).lower()
             for keyword in keywords:
-                logger.info(f"Searching for '{keyword}' in {str(element)}")
-                if re.search(pattern=keyword, string=str(element).lower()):
-                    logger.info(f"FOUND {keyword} in {str(element).lower()}")
+                logger.info(f"Searching for '{keyword}' in {element_string}")
+                if re.search(pattern=f'(?<!\\w){keyword}(?!\\w)', string=element_string):
+                    logger.info(f"FOUND {keyword} in {element_string}")
                     if element not in self.elements_with_keywords:
                         self.elements_with_keywords.append(element)
                         logger.info(f"Added {element}\n to self.elements_with_keyword based on keyword: {keyword}")
+        logger.info(f"Found {len(self.elements_with_keywords)} elements with keywords")
         return self.elements_with_keywords
 
