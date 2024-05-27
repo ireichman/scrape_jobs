@@ -49,8 +49,12 @@ keywords = list_from_file(file="keywords")
 
 # Cook soup
 job_sites_objects = []
-for website in websites[2:]:
-    page = requests.get(url=website)
+for website in websites:
+    try:
+        page = requests.get(url=website)
+    except Exception as error:
+        logger.error(f"Request could not get page. Error: {error}")
+        continue
     soup = HTML(html_raw=page, keywords=keywords, website=website) #bs(markup=page.content, features="html.parser")
     job_sites_objects.append(soup)
     # element = job_sites_objects[0].search_elements(element_type="a", text_content="Careers")
