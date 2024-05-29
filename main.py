@@ -52,9 +52,18 @@ job_sites_objects = []
 for website in websites:
     try:
         page = requests.get(url=website)
+        page_encoding = page.encoding
     except Exception as error:
         logger.error(f"Request could not get page. Error: {error}")
         continue
+    try:
+        logger.info(f"Trying to decode {website} page with {page_encoding} to make sure it's valid.")
+        page.content.decode(page_encoding)
+        logger.info(f"Successfully decoded {website} with {page_encoding}")
+    except Exception as error:
+        logger.error(f"Error decodidng {website}. Error info.:\n{error}")
+        continue
+
     soup = HTML(html_raw=page, keywords=keywords, website=website) #bs(markup=page.content, features="html.parser")
     job_sites_objects.append(soup)
     # element = job_sites_objects[0].search_elements(element_type="a", text_content="Careers")
