@@ -72,9 +72,10 @@ for job_site in job_sites_objects:
     jobs_list = job_site.keywords_search(keywords=keywords)
     jobs_dict[job_site.website] = jobs_list
 
+
 email = Email(to_address="xxx@xxx.com", jobs=jobs_dict)
 email_html = email.format_email()
-
+print("HTML: ", email_html)
 # print("Jobs Matching keywords:\n", jobs_list)
 
 
