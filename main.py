@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup as bs
 import requests
 from loguru import logger
 from html_handling import HTML
+from send_email import Email
 from threading import Thread as tr
 
 
@@ -43,13 +44,9 @@ websites = list_from_file(file="websites")
 # Read list of keywords to look for. User will populate a text file with a list of sites separated by new line.
 keywords = list_from_file(file="keywords")
 
-# Pull website.
-# url = "https://realpython.github.io/fake-jobs/"
-# page = requests.get(url=url)
-
 # Cook soup
 job_sites_objects = []
-for website in websites:
+for website in websites[1:]:
     try:
         page = requests.get(url=website)
         page_encoding = page.encoding
@@ -69,10 +66,16 @@ for website in websites:
     # element = job_sites_objects[0].search_elements(element_type="a", text_content="Careers")
     # print("a:\n", job_sites_objects[0].extract_from_element(what_to_extract="href"))
 
+jobs_dict = {}
 for job_site in job_sites_objects:
     job_site.search_for_elements(element_type='a', text_content="")
     jobs_list = job_site.keywords_search(keywords=keywords)
-print("Jobs Matching keywords:\n", jobs_list)
+    jobs_dict[job_site.website] = jobs_list
+
+email = Email(to_address="xxx@xxx.com", jobs=jobs_dict)
+email_html = email.format_email()
+
+# print("Jobs Matching keywords:\n", jobs_list)
 
 
 

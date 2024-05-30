@@ -13,6 +13,7 @@ class HTML:
         self.html_body = self.soup.find("body")
         self.prettify = self.html_body.prettify()
         self.keywords: list = keywords
+        self.website: str = website
         self.element: object = None
         self.elements: list = []
         self.elements_with_keywords: list = []

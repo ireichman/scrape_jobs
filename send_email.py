@@ -48,8 +48,8 @@ class Email:
         message["Subject"] = f"Jobs Digest. {len(self.jobs)} new jobs found."
         message["From"] = self.from_address
         message["To"] = self.to_address
-        for website in self.jobs:
-            title = f"<h3>Jobs from {website}</h3>"
-            jobs_per_website: str = ""
-            for job in website:
+        for website, job_list in self.jobs:
+            title = f"<h3>Jobs from {website.website}</h3>"
+            jobs_paragraph: str = ""
+            for job in job_list:
                 jobs_paragraph = jobs_paragraph + job + "\n"
