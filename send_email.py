@@ -26,6 +26,7 @@ class Email:
             </body>
         </html>
         """
+        self.email_test: str = """"""
 
     def send_email(self):
         with smtplib.SMTP(host="smtplib.mail.yahoo.com", port=587) as emai_connection:
@@ -44,8 +45,11 @@ class Email:
 
     def format_email(self):
         message = MIMEMultipart("alternative")
-        message["Subject"] = "Jobs Digest"
+        message["Subject"] = f"Jobs Digest. {len(self.jobs)} new jobs found."
         message["From"] = self.from_address
         message["To"] = self.to_address
         for website in self.jobs:
-            title = f""
+            title = f"<h3>Jobs from {website}</h3>"
+            jobs_per_website: str = ""
+            for job in website:
+                jobs_paragraph = jobs_paragraph + job + "\n"
