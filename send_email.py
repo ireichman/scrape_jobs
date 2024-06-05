@@ -2,6 +2,7 @@ from dotenv import load_dotenv
 import os
 import smtplib
 from loguru import logger
+from urllib.parse import urlparse
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
@@ -42,10 +43,15 @@ class Email:
         message["To"] = self.to_address
         formatted_email_per_site = []
         for website, job_list in self.jobs.items():
-            title = f"<h3>Jobs from {website}</h3>"
+            website_parts = self.trim_website_string(website)
+            title = f"<h3>Jobs from {website_parts[1]}</h3>"
             jobs_paragraph: str = ""
             for job in job_list:
-                jobs_paragraph = jobs_paragraph + job.text + "\n"
+                job_url = job["href"]
+                if "https" not in job_url:
+                    job_url = website_parts[0] + "://" + website_parts[1] + job_url
+
+                jobs_paragraph = jobs_paragraph + f'<a href="{job_url}">{job.text}</a>' + "\n"
             email_content_per_site = f"{title}\n{jobs_paragraph}\n\n"
             formatted_email_per_site.append(email_content_per_site)
         formatted_email_all_sites = "\n".join(formatted_email_per_site)
@@ -67,4 +73,17 @@ class Email:
 
     def create_text_email(self):
         pass
+
+    def trim_website_string(self, website):
+        """
+        Takes a URL string and splits it to scheme, domain, and the rest of the URL.
+        :param website: String that contains URL.
+        :return: Tuple with URL parts
+        """
+        parse_url = urlparse(url=website)
+        url_scheme = parse_url.scheme
+        url_domain = parse_url.netloc
+        url_path = parse_url.path
+        return url_scheme, url_domain, url_path
+
 

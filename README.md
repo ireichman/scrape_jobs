@@ -9,9 +9,9 @@ relevant jobs with a link for applying to them.
 
 ## To-Do/ Roadmap:
 * Add text option to email.
-* Finesse message formatting. (Add website name instead of url, user's name.)
+* Finesse message formatting. (~~Add website name instead of url~~, user's name.)
 * Switch to DB instead of text files.
 * Add logic for scraping once, filtering once, then emailing each user the relevant jobs.
 * Add secure user login.
 * Give users ability to edit sites, keywords, email address.
-* 
+* Add verificaton that URL is completer with scheme and path.
