@@ -17,24 +17,26 @@ class Email:
         self.from_address: str = FROM_ADDR
         self.to_address: str = to_address
         self.jobs: dict = jobs
-        self.email_message: str = ""
+        self.email_content: str = ""
 
-        self.email_text: str = """"""
+        self.email_text: str = """Could not display HTML"""
 
     def send_email(self):
-        with smtplib.SMTP(host="smtplib.mail.yahoo.com", port=587) as emai_connection:
-            emai_connection.ehlo()
-            emai_connection.starttls()
-            emai_connection.login(user=self.to_address, password=PWD)
-            try:
+        try:
+            with smtplib.SMTP(host="smtp.mail.yahoo.com", port=587) as emai_connection:
+                emai_connection.ehlo()
+                emai_connection.starttls()
+                emai_connection.login(user=self.from_address, password=PWD)
                 emai_connection.sendmail(from_addr=self.from_address,
                                          to_addrs=self.to_address,
-                                         msg=self.email_message)
+                                         msg=self.email_message.as_string())
                 logger.info(f"Sent email to {self.to_address}")
                 return True
-            except Exception as error:
-                logger.error(f"Sending email to {self.email_message} failed with error:\n{error}")
-                return False
+        except Exception as error:
+            logger.error(f"Sending email message {self.email_message}\n to {self.to_address} from {self.from_address}"
+                         f" failed with error:\n{error}")
+            return False
+
 
     def format_email(self):
         message = MIMEMultipart("alternative")
@@ -55,8 +57,14 @@ class Email:
             email_content_per_site = f"{title}\n{jobs_paragraph}\n\n"
             formatted_email_per_site.append(email_content_per_site)
         formatted_email_all_sites = "\n".join(formatted_email_per_site)
-        self.email_message = formatted_email_all_sites
+        self.email_content = formatted_email_all_sites
         self.create_html_email()
+        # Set up the message for SMTPlib.
+        email_text = MIMEText(_text=self.email_text, _subtype="plain")
+        email_html = MIMEText(_text=self.email_html, _subtype="html")
+        message.attach(payload=email_text)
+        message.attach(payload=email_html)
+        self.email_message = message
         return self.email_message
 
     def create_html_email(self):
@@ -64,7 +72,7 @@ class Email:
         <html>
             <body>
                 <p>
-                {self.email_message}
+                {self.email_content}
                 </p>
             </body>
         </html>
