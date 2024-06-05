@@ -17,16 +17,8 @@ class Email:
         self.to_address: str = to_address
         self.jobs: dict = jobs
         self.email_message: str = ""
-        self.email_html: str = f"""\
-        <html>
-            <body>
-                <p>
-                {self.email_message}
-                </p>
-            </body>
-        </html>
-        """
-        self.email_test: str = """"""
+
+        self.email_text: str = """"""
 
     def send_email(self):
         with smtplib.SMTP(host="smtplib.mail.yahoo.com", port=587) as emai_connection:
@@ -58,6 +50,21 @@ class Email:
             formatted_email_per_site.append(email_content_per_site)
         formatted_email_all_sites = "\n".join(formatted_email_per_site)
         self.email_message = formatted_email_all_sites
+        self.create_html_email()
+        return self.email_message
+
+    def create_html_email(self):
+        self.email_html: str = f"""\
+        <html>
+            <body>
+                <p>
+                {self.email_message}
+                </p>
+            </body>
+        </html>
+        """
         return self.email_html
 
+    def create_text_email(self):
+        pass
 

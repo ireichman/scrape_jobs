@@ -75,7 +75,7 @@ for job_site in job_sites_objects:
 
 email = Email(to_address="xxx@xxx.com", jobs=jobs_dict)
 email_html = email.format_email()
-print("HTML: ", email_html)
+print("HTML: ", email.email_html)
 # print("Jobs Matching keywords:\n", jobs_list)
 
 
