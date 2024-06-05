@@ -1,12 +1,10 @@
 """
 Scrape websites for jobs postings containing keywords.
 """
-from bs4 import BeautifulSoup as bs
 import requests
 from loguru import logger
 from html_handling import HTML
 from send_email import Email
-from threading import Thread as tr
 
 
 def list_from_file(file: str):
@@ -61,10 +59,8 @@ for website in websites[1:]:
         logger.error(f"Error decodidng {website}. Error info.:\n{error}")
         continue
 
-    soup = HTML(html_raw=page, keywords=keywords, website=website) #bs(markup=page.content, features="html.parser")
+    soup = HTML(html_raw=page, keywords=keywords, website=website)
     job_sites_objects.append(soup)
-    # element = job_sites_objects[0].search_elements(element_type="a", text_content="Careers")
-    # print("a:\n", job_sites_objects[0].extract_from_element(what_to_extract="href"))
 
 jobs_dict = {}
 for job_site in job_sites_objects:
@@ -77,37 +73,3 @@ email = Email(to_address="xxx@xxx.com", jobs=jobs_dict)
 email_html = email.format_email()
 print("HTML: ", email.email_html)
 email.send_email()
-# print("Jobs Matching keywords:\n", jobs_list)
-
-
-
-
-
-
-# Scrape a website for careers/ jobs/ corporate/ etc.
-# for soup in job_sites_objects:
-#     careers_link = soup.search_elements(element_type="a", string_text=["career"])
-
-# jobs_elements = jobs_element.find_all("div", class_="card-content")
-
-# Find jobs with specific keywords.
-# relevant_jobs = jobs_element.find_all("h2",
-#                                       string=lambda text: "python" in text.lower()) # keywords_search(html_string=text, keyword=["python", "executive"]))
-#
-# relevant_jobs_full_card = [h2_element.parent.parent.parent for h2_element in relevant_jobs]
-
-# Iterate through found listings
-# for job in relevant_jobs_full_card:
-#     job_title = job.find("h2", class_="title")
-#     job_company = job.find("h3", class_="company")
-#     job_location = job.find("p", class_="location")
-#     job_links = job.find_all(name="a", string=lambda text: "apply" in text.lower())
-#     # job_link = job.
-#     print(f"Title: {job_title.text} "
-#           f"\nCompany: {job_company.text} "
-#           f"\nLocation: {job_location.text.strip()} "
-#           f"\nApplication link: {job_links[0]['href']}")
-
-# Look for next type buttons.
-
-# If next button found, Scrape next page for listings and report until no more listings available.
