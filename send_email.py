@@ -1,3 +1,6 @@
+"""
+Email formatting and sending.
+"""
 from dotenv import load_dotenv
 import os
 import smtplib
@@ -12,16 +15,28 @@ PWD: str = os.getenv("PWD_YAHOO")
 
 
 class Email:
-
+    """
+    Email formatting and sending using SMTPlib.
+    Formats and sends one email at a time.
+    """
     def __init__(self, to_address: str, jobs: dict):
+        """
+        Initiating Email class requires the recipient address and a dictionary of jobs.
+        :param to_address: String with recipient email.
+        :param jobs: A dictionary where each key is a website's URL and the value is a list of HTML 'a' elements.
+        """
         self.from_address: str = FROM_ADDR
         self.to_address: str = to_address
         self.jobs: dict = jobs
         self.email_content: str = ""
-
+        self.email_message: object = None
         self.email_text: str = """Could not display HTML"""
 
     def send_email(self):
+        """
+        Sending an email using SMTPlib. Requires self.email_message to be MIMEMulitpart object
+        :return:
+        """
         try:
             with smtplib.SMTP(host="smtp.mail.yahoo.com", port=587) as emai_connection:
                 emai_connection.ehlo()

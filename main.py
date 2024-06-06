@@ -44,7 +44,7 @@ keywords = list_from_file(file="keywords")
 
 # Cook soup
 job_sites_objects = []
-for website in websites[1:]:
+for website in websites:
     try:
         page = requests.get(url=website)
         page_encoding = page.encoding
@@ -59,7 +59,7 @@ for website in websites[1:]:
         logger.error(f"Error decodidng {website}. Error info.:\n{error}")
         continue
 
-    soup = HTML(html_raw=page, keywords=keywords, website=website)
+    soup = HTML(html_raw=page, keywords=keywords)
     job_sites_objects.append(soup)
 
 jobs_dict = {}

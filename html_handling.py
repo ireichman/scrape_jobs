@@ -25,14 +25,15 @@ class HTML:
         self.element: object = None
         self.elements: list = []
         self.elements_with_keywords: list = []
-        logger.info(f"Created HTML object for {html_raw.url} with keywords: {keywords}")
+        self.website: str = html_raw.url
+        logger.info(f"Created HTML object for {self.website} with keywords: {keywords}")
 
     def search_for_elements(self, element_type: str, text_content: str):
         """
-
-        :param element_type:
-        :param text_content:
-        :return:
+        Searches BS4 soup for elements of a specific type with a specific text content.
+        :param element_type: Specify the HTML element to look for.
+        :param text_content: Specify the text in the HTML element.
+        :return: A BS4 object.
         """
         logger.info(f"Searching for HTML tag '{element_type}' with attribute: text_content={text_content}, "
                     f"containing string(s):")
@@ -48,8 +49,8 @@ class HTML:
 
     def extract_from_element(self, what_to_extract: str):
         """
-        Finds data in BS object.
-        :param element_object:
+
+        :param what_to_extract:
         :return:
         """
         logger.info(f"Extracting from element: {what_to_extract}")
@@ -64,7 +65,7 @@ class HTML:
         """
         Take a list of BS objects and search for keywords in them. Add those elements to self.element_with_keywords
         :param keywords: list of keywords passed by the user.
-        :return: self.element_with_keywords
+        :return: A list of BS4 objects that matches any of the keywords.
         """
 
         for element in self.elements:

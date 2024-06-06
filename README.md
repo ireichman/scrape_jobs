@@ -15,9 +15,16 @@ THIS APP IS IN A VERY EARLY STAGE OF DEVELOPMENT. Use at your own risk.
 
 ## To-Do/ Roadmap:
 * Add text option to email.
-* Add secure user login.
+* Email title shows the number of jobs found for the first website not all.
+* Check why sending an email when Canonical cannot be decoded gives an empty email. 
 * Finesse message formatting. (Show links in newline, user's name.)
 * Switch to DB instead of text files.
 * Add logic for scraping once, filtering once, then emailing each user the relevant jobs.
-* Give users ability to edit sites, keywords, email address.
+* Add logic for finding job listings on a website instead of requiring specific URL.
+* Improve listing search. (Check that results are actually jobs and irrelevant links. Maybe check if 'href' is relevant?)
 * Add verificaton that URL is completer with scheme and path.
+* Make a webapp:
+    * Add secure user login.
+    * Give users ability to edit sites, keywords, email address.
+    * 
+  
