@@ -61,7 +61,7 @@ class Email:
         formatted_email_per_site = []
         for website, job_list in self.jobs.items():
             website_parts = self.trim_website_string(website)
-            title = f"<h3>Jobs from {website_parts[1]}</h3>"
+            title = f"<h3>Jobs from {website_parts[1]}:</h3>"
             jobs_paragraph: str = ""
             for job in job_list:
                 job_url = job["href"]
