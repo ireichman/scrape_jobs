@@ -2,7 +2,7 @@
 
 ## Purpose:
 Is there a dream job for you out there? Would you like to be a Lion Tamer but stuck doing accounting?  
-This app allows you to check relevant employers for specific jobs on a regular business. When jobs are found \ 
+This app allows you to check relevant employers for specific jobs on a regular basis. When jobs are found \ 
 they will be emailed to you. So stop checking these postings obsessively (or even lackadaisically) and just \
 check your email!
 
@@ -24,6 +24,7 @@ THIS APP IS IN A VERY EARLY STAGE OF DEVELOPMENT. Use at your own risk.
 * Improve listing search. (Check that results are actually jobs and irrelevant links. Maybe check if 'href' is relevant?)
 * Add verificaton that URL is completer with scheme and path.
 * Make a webapp:
+    * Design site
     * Add secure user login.
     * Give users ability to edit sites, keywords, email address.
     * 
