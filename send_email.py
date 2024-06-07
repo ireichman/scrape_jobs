@@ -68,7 +68,7 @@ class Email:
                 if "https" not in job_url:
                     job_url = website_parts[0] + "://" + website_parts[1] + job_url
 
-                jobs_paragraph = jobs_paragraph + f'<a href="{job_url}">{job.text}</a>' + "\n"
+                jobs_paragraph = jobs_paragraph + f'<a href="{job_url}">{job.text}</a>' + "<br>"
             email_content_per_site = f"{title}\n{jobs_paragraph}\n\n"
             formatted_email_per_site.append(email_content_per_site)
         formatted_email_all_sites = "\n".join(formatted_email_per_site)

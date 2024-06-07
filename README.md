@@ -17,7 +17,7 @@ THIS APP IS IN A VERY EARLY STAGE OF DEVELOPMENT. Use at your own risk.
 * Add text option to email.
 * Email title shows the number of jobs found for the first website not all.
 * Check why sending an email when Canonical cannot be decoded gives an empty email. 
-* Finesse message formatting. (Show links in newline, user's name.)
+* Finesse message formatting. (~~Show links in newline~~, better job titles, user's name.)
 * Switch to DB instead of text files.
 * Add logic for scraping once, filtering once, then emailing each user the relevant jobs.
 * Add logic for finding job listings on a website instead of requiring specific URL.
