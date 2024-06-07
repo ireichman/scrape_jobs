@@ -11,13 +11,14 @@ class HTML:
     """
     HTML handling using BS4.
     """
-    def __init__(self, html_raw: object, keywords: list = None):
+    def __init__(self, html_raw: object, website: str, keywords: list = None):
         """
         HTML class is initialized with a requests object of the jobs page from a site.
         :param html_raw: requests object
+        :param website: A string with the URL of the HTML page.
         :param keywords: list of strings. Each string can be used for searching in job descriptions.
         """
-        self.soup = bs(markup=html_raw.content, features="html.parser")
+        self.soup = bs(markup=html_raw, features="html.parser")
         self.html_body = self.soup.find("body")
         # Prettify shows HTML in a pretty format for debugging purposes.
         self.prettify = self.html_body.prettify()
@@ -25,7 +26,7 @@ class HTML:
         self.element: object = None
         self.elements: list = []
         self.elements_with_keywords: list = []
-        self.website: str = html_raw.url
+        self.website: str = website
         logger.info(f"Created HTML object for {self.website} with keywords: {keywords}")
 
     def search_for_elements(self, element_type: str, text_content: str):
