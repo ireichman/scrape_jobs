@@ -2,11 +2,17 @@
 Scrape websites for jobs postings containing keywords.
 """
 import requests
+from dotenv import load_dotenv
+import os
 from loguru import logger
 from html_handling import HTML
 from send_email import Email
 import brotli
 
+load_dotenv("secrets.env")
+FROM_ADDR: str = os.getenv("FROM_ADDR")
+TO_ADDR: str = os.getenv("TO_ADDR")
+PWD: str = os.getenv("PWD_YAHOO")
 
 headers = {
     'Accept-Encoding': 'br, gzip, deflate'
@@ -85,7 +91,7 @@ for job_site in job_sites_objects:
     jobs_dict[job_site.website] = jobs_list
 
 
-email = Email(to_address="xxx@xxx.com", jobs=jobs_dict)
+email = Email(to_address=TO_ADDR, jobs=jobs_dict)
 email_html = email.format_email()
 print("HTML: ", email.email_html)
 email.send_email()
