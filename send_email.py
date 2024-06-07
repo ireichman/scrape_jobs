@@ -30,6 +30,7 @@ class Email:
         self.jobs: dict = jobs
         self.email_content: str = ""
         self.email_message: object = None
+        self.email_html: str = ""
         self.email_text: str = """Could not display HTML"""
 
     def send_email(self):
@@ -51,7 +52,6 @@ class Email:
             logger.error(f"Sending email message {self.email_message}\n to {self.to_address} from {self.from_address}"
                          f" failed with error:\n{error}")
             return False
-
 
     def format_email(self):
         message = MIMEMultipart("alternative")
@@ -83,6 +83,10 @@ class Email:
         return self.email_message
 
     def create_html_email(self):
+        """
+        Adds self.email_html attribute after the email content was created
+        :return: String with html formatted content.
+        """
         self.email_html: str = f"""\
         <html>
             <body>
