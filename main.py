@@ -2,9 +2,21 @@
 Scrape websites for jobs postings containing keywords.
 """
 import requests
+from dotenv import load_dotenv
+import os
 from loguru import logger
 from html_handling import HTML
 from send_email import Email
+import brotli
+
+load_dotenv("secrets.env")
+FROM_ADDR: str = os.getenv("FROM_ADDR")
+TO_ADDR: str = os.getenv("TO_ADDR")
+PWD: str = os.getenv("PWD_YAHOO")
+
+headers = {
+    'Accept-Encoding': 'br, gzip, deflate'
+}
 
 
 def list_from_file(file: str):
@@ -32,6 +44,24 @@ def list_from_file(file: str):
     return words
 
 
+def check_encoding(web_page: object, website: str):
+    page_encoding = page.encoding
+    logger.info(f"Page headers for {website} indicate {page_encoding} compression. Attempting decompression")
+    if page.encoding == 'br':
+        try:
+            decompressed_page = brotli.decompress(page.content)
+            logger.info(f"Page content for {website} was decompressed successfully using Brotli.")
+        except Exception as error:
+            logger.error(f"Page headers indicate Brotli compression but decompression failied with error:\n{error}")
+    else:
+        try:
+            decompressed_page = page.content
+            logger.info(f"Page content for {website} was decoded and/ or decompressed successfully using {page_encoding}.")
+        except Exception as error:
+            logger.error(f"Could not decode/ decompress {website} which uses {page_encoding}.")
+    return decompressed_page
+
+
 if __name__ == "__main__":
     pass
 
@@ -44,22 +74,14 @@ keywords = list_from_file(file="keywords")
 
 # Cook soup
 job_sites_objects = []
-for website in websites[2:]:
+for website in websites[:]:
     try:
-        page = requests.get(url=website)
-        page_encoding = page.encoding
+        page = requests.get(url=website, headers=headers)
     except Exception as error:
         logger.error(f"Request could not get page. Error: {error}")
         continue
-    try:
-        logger.info(f"Trying to decode {website} page with {page_encoding} to make sure it's valid.")
-        page.content.decode(page_encoding)
-        logger.info(f"Successfully decoded {website} with {page_encoding}")
-    except Exception as error:
-        logger.error(f"Error decodidng {website}. Error info.:\n{error}")
-        continue
-
-    soup = HTML(html_raw=page, keywords=keywords)
+    page_decoded = check_encoding(web_page=page, website=website)
+    soup = HTML(html_raw=page_decoded, keywords=keywords, website=website)
     job_sites_objects.append(soup)
 
 jobs_dict = {}
@@ -69,7 +91,7 @@ for job_site in job_sites_objects:
     jobs_dict[job_site.website] = jobs_list
 
 
-email = Email(to_address="xxx@xxx.com", jobs=jobs_dict)
+email = Email(to_address=TO_ADDR, jobs=jobs_dict)
 email_html = email.format_email()
 print("HTML: ", email.email_html)
 email.send_email()
