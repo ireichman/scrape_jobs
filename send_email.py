@@ -32,6 +32,7 @@ class Email:
         self.email_message: object = None
         self.email_html: str = ""
         self.email_text: str = """Could not display HTML"""
+        self.total_jobs = sum(map(len, self.jobs.values()))
 
     def send_email(self):
         """
@@ -55,7 +56,7 @@ class Email:
 
     def format_email(self):
         message = MIMEMultipart("alternative")
-        message["Subject"] = f"Jobs Digest. {len(self.jobs)} new jobs found."
+        message["Subject"] = f"Jobs Digest. {self.total_jobs} new jobs found."
         message["From"] = self.from_address
         message["To"] = self.to_address
         formatted_email_per_site = []
