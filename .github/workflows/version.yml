@@ -37,4 +37,5 @@ jobs:
 
       - name: Create the tag
         uses: thejeff77/action-push-tag@v1.0.0
-        with: ${{ steps.version.outputs.VERSION }}
+        with:
+          tag: ${{ steps.version.outputs.VERSION }}
