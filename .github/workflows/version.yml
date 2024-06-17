@@ -9,7 +9,10 @@ on:
       - main
 
 jobs:
-  lint:
+  Versioning:
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      newvers: ${{ steps.newver.outputs.newver }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -18,13 +21,12 @@ jobs:
           ref: ${{ github.head_ref }}   # checkout the correct branch name
           fetch-depth: 0                # fetch the whole repo history
 
-      - name: Git Version
+      - name: Generate version
         id: version
         uses: codacy/git-version@2.7.1
+        with:
+          release-branch: main
 
-      - name: Use the version
-        run: |
-          echo ${{ steps.version.outputs.version }}
-      - name: Use the previous version
-        run: |
-          echo ${{ steps.version.outputs.previous-version }}
+      - name: Create the tag
+        uses: thejeff77/action-push-tag@v1.0.0
+        with: ${{ steps.version.outputs.VERSION }}
