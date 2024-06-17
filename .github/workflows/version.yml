@@ -1,12 +1,13 @@
 name: Git Version
 
 on:
-  pull_request:
-    branches:
-      - main
   push:
     branches:
-      - main
+      - 'main'
+  pull_request:
+    branches:
+      - 'main'
+
 
 jobs:
   Versioning:
@@ -23,7 +24,7 @@ jobs:
 
       - name: Generate version
         id: version
-        uses: codacy/git-version@2.5.4
+        uses: codacy/git-version@2.8.0
         with:
           release-branch: main
 
