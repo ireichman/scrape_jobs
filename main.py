@@ -95,6 +95,3 @@ email = Email(to_address=TO_ADDR, jobs=jobs_dict)
 email_html = email.format_email()
 print("HTML: ", email.email_html)
 email.send_email()
-
-
-# Testing versioning 6
