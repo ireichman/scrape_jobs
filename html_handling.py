@@ -80,3 +80,7 @@ class HTML:
         logger.info(f"Found {len(self.elements_with_keywords)} elements with keywords")
         return self.elements_with_keywords
 
+    def search_in_element(self, element: str):
+        element_to_set = set(element.split())
+        # Keywords to search for in href.
+        href_key_words = ["career", "job", "opportunity"]
