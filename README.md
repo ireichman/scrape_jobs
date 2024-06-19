@@ -15,6 +15,7 @@ THIS APP IS IN A VERY EARLY STAGE OF DEVELOPMENT. Use at your own risk.
 
 ## To-Do/ Roadmap:
 * Add text option to email.
+* Add Selenium class to handle dynamic content.
 * ~~Email title shows the number of websites scraped not jobs found.~~
 * ~~Check why sending an email when Canonical cannot be decoded gives an empty email.~~ 
 * Finesse message formatting. (~~Show links in newline~~, better job titles, user's name.)

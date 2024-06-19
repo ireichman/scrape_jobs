@@ -74,7 +74,7 @@ keywords = list_from_file(file="keywords")
 
 # Cook soup
 job_sites_objects = []
-for website in websites[:]:
+for website in websites[:1]:
     try:
         page = requests.get(url=website, headers=headers)
     except Exception as error:

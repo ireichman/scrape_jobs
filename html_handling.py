@@ -2,7 +2,6 @@
 Scraping tools and classes
 """
 from bs4 import BeautifulSoup as bs
-import requests
 from loguru import logger
 import re
 
