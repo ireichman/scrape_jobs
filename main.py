@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 import os
 from loguru import logger
 from html_handling import HTML
+from fetch_page import FetchPage
 from send_email import Email
 import brotli
 
@@ -13,6 +14,13 @@ load_dotenv("secrets.env")
 FROM_ADDR: str = os.getenv("FROM_ADDR")
 TO_ADDR: str = os.getenv("TO_ADDR")
 PWD: str = os.getenv("PWD_YAHOO")
+
+
+
+# TODO: Clean main.py.
+# TODO: Add comments to FetchPage
+# TODO: Add requests to FetchPage.
+
 
 headers = {
     'Accept-Encoding': 'br, gzip, deflate'
@@ -75,13 +83,15 @@ keywords = list_from_file(file="keywords")
 # Cook soup
 job_sites_objects = []
 for website in websites[:1]:
-    try:
-        page = requests.get(url=website, headers=headers)
-    except Exception as error:
-        logger.error(f"Request could not get page. Error: {error}")
-        continue
-    page_decoded = check_encoding(web_page=page, website=website)
-    soup = HTML(html_raw=page_decoded, keywords=keywords, website=website)
+    fetch_page = FetchPage(url=website)
+    page = fetch_page.fetch_with_selenium()
+    # try:
+    #     page = requests.get(url=website, headers=headers)
+    # except Exception as error:
+    #     logger.error(f"Request could not get page. Error: {error}")
+    #     continue
+    # page_decoded = check_encoding(web_page=page, website=website)
+    soup = HTML(html_raw=page, keywords=keywords, website=website)
     job_sites_objects.append(soup)
 
 jobs_dict = {}
