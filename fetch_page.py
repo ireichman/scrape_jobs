@@ -52,7 +52,7 @@ class FetchPage:
 
         try:
             driver.get(url=self.url)
-            WebDriverWait(driver=driver, timeout=10).until(EC.presence_of_element_located((By.TAG_NAME, 'a')))
+            WebDriverWait(driver=driver, timeout=5).until(EC.presence_of_element_located((By.TAG_NAME, 'a')))
             logger.info(f"Selenium Fetched {self.url}")
         except Exception as  error:
             logger.error(f"Error trying to fetch {self.url}\nError: {error}")
