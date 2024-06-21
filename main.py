@@ -14,11 +14,6 @@ TO_ADDR: str = os.getenv("TO_ADDR")
 PWD: str = os.getenv("PWD_YAHOO")
 
 
-
-# TODO: Clean main.py.
-# TODO: Add comments to FetchPage
-
-
 def list_from_file(file: str):
     """
     Read a text file and break text in to a list of words by new line.
