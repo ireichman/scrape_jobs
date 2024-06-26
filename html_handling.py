@@ -21,6 +21,8 @@ class HTML:
         self.html_body = self.soup.find("body")
         # Prettify shows HTML in a pretty format for debugging purposes.
         self.prettify = self.html_body.prettify()
+        # Using set for faster match search.
+        self.href_keywords: set = {"career", "careers", "job", "jobs"}
         self.keywords: list = keywords
         self.element: object = None
         self.elements: list = []
@@ -39,7 +41,7 @@ class HTML:
                     f"containing string(s):")
 
         try:
-            all_elements = self.html_body.find_all(name=element_type, href=True)
+            all_elements = self.html_body.find_all(name=element_type, href=self.search_in_href)
             logger.info(f"Found elements: {all_elements}")
             self.elements = all_elements
             logger.debug(f"Self.elements = {self.elements}")
@@ -84,3 +86,9 @@ class HTML:
         element_to_set = set(element.split())
         # Keywords to search for in href.
         href_key_words = ["career", "job", "opportunity"]
+
+    def search_in_href(self, href: str):
+        if href:
+            words = re.split(r'\W+', href)
+            return any(word in words for word in self.href_keywords)
+        return False

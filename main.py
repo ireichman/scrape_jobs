@@ -51,7 +51,7 @@ keywords = list_from_file(file="keywords")
 
 # Cook soup
 job_sites_objects = []
-for website in websites[:]:
+for website in websites[2:3]:
     fetch_page = FetchPage(url=website)
     page = fetch_page.fetch_with_selenium()
     soup = HTML(html_raw=page, keywords=keywords, website=website)
