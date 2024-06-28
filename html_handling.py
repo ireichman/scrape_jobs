@@ -22,7 +22,7 @@ class HTML:
         # Prettify shows HTML in a pretty format for debugging purposes.
         self.prettify = self.html_body.prettify()
         # Using set for faster match search.
-        self.href_keywords: set = {"career", "careers", "job", "jobs"}
+        self.href_keywords: set = {"career", "careers", "job", "jobs", "details"}
         self.keywords: list = keywords
         self.element: object = None
         self.elements: list = []
@@ -88,7 +88,12 @@ class HTML:
         href_key_words = ["career", "job", "opportunity"]
 
     def search_in_href(self, href: str):
+        logger.info(f"Searching href: {href} for keywrds: {self.href_keywords}")
         if href:
             words = re.split(r'\W+', href)
-            return any(word in words for word in self.href_keywords)
+            logger.debug(f"Words in href: {words}")
+            are_keywords_in_href = any(word in words for word in self.href_keywords)
+            logger.info(f"Found relevant words in href? {are_keywords_in_href}")
+            return are_keywords_in_href
         return False
+0

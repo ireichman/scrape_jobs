@@ -4,6 +4,7 @@ Email formatting and sending.
 from dotenv import load_dotenv
 import os
 import smtplib
+import re
 from loguru import logger
 from urllib.parse import urlparse
 from email.mime.text import MIMEText
@@ -114,4 +115,8 @@ class Email:
         url_path = parse_url.path
         return url_scheme, url_domain, url_path
 
+    def format_url(self, job_url: str, website_parts: list):
 
+
+        if "https" not in job_url:
+            job_url = website_parts[0] + "://" + website_parts[1] + job_url
